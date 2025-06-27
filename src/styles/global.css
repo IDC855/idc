@@ -1,0 +1,228 @@
+:root {
+  --primary-clr: #0672cd;
+  --sec2-clr: #9864ad;
+  --sec-clr: #d8a31a;
+  --text-clr1: #f5f9ff;
+  --text-deco: #f3f9ff;
+  --white-purple: #b9dfff;
+  --dark-clr1: #000613;
+  --dark-clr2: #070e1e;
+  --dark-clr3: #020d25;
+  --dark-clr4: #002848;
+  --dark-clr5: #070032;
+
+  --opac-clr1: #00123345;
+  --opac-clr2: #0263b37d;
+  --opac-clr3: #364763a1;
+
+  --danger-clr: #dc1262;
+  --yellow-clr: #f9f871;
+  --green-clr: #2dc194;
+  --grey-clr: #928e84;
+  --linear-grad1: linear-gradient(180deg, #0672cd 40%, #d8a31a);
+  --linear-grad2: linear-gradient(120deg, #0672cd, #d8a31a);
+  --linear-grad3: linear-gradient(180deg, #d8a31a, #0672cd, #d8a31a);
+
+  --gen-padding: 10%;
+  --btn-height: 40px;
+
+  --font-alegreya: "Alegreya Sans", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-mont: "Montserrat", sans-serif;
+}
+
+*::selection {
+  color: var(--primary-clr);
+  background: var(--text-clr1);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-family: var(--font-alegreya);
+  color: var(--text-clr1);
+  user-select: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  max-width: 100vw;
+}
+
+body {
+  background-color: var(--dark-clr1);
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 3px;
+  background-color: var(--dark-clr1);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  padding: 3px;
+  width: 100%;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 7px;
+  background: var(--primary-clr);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#absWa {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4dc247;
+  aspect-ratio: 1;
+  z-index: 10000;
+  border-radius: 50%;
+}
+
+#absWa img {
+  width: 90%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+@media screen and (max-width: 1309px) {
+  body {
+    --gen-padding: 5%;
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 600px) {
+  body {
+    font-size: 12px;
+  }
+}
+
+/* Resize the container */
+#google_translate_element {
+  transform: scale(0.8);
+  transform-origin: top right;
+  float: right;
+}
+
+/* Hide the Google logo */
+.goog-logo-link {
+  display: none !important;
+}
+
+/* Hide the "Powered by Google" text */
+.goog-te-gadget span {
+  color: #000613 !important;
+} /* Optional: add your own styling */
+#google_translate_element select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.kyc-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #1e1e1e; /* dark background */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #f1f1f1; /* light text for dark bg */
+}
+
+.kyc-container h3 {
+  margin-bottom: 1rem;
+  font-size: 24px;
+  font-weight: 600;
+  color: #e6c63b;
+}
+
+.kyc-container p {
+  margin-bottom: 2rem;
+  font-size: 14px;
+  color: #ccc;
+  line-height: 1.6;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #ddd;
+}
+
+.form-control,
+.form--control,
+.form-select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+  font-size: 15px;
+  color: #ffffff;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form-control::placeholder,
+.form--control::placeholder {
+  color: #888;
+}
+
+.form-control:focus,
+.form--control:focus,
+.form-select:focus {
+  border-color: #2dc194;
+  background-color: #333;
+  outline: none;
+}
+
+input[type="file"].form-control {
+  background-color: transparent;
+  color: #fff;
+}
+
+.btn--base {
+  background-color: #2dc194;
+  color: #fff;
+  padding: 0.75rem;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.btn--base:hover {
+  background-color: #27b286;
+}

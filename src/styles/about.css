@@ -1,0 +1,40 @@
+.companyscopes {
+  display: flex;
+  justify-content: space-between; /* Horizontal layout for larger screens */
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.unitscope {
+  text-align: center; /* Center text inside each unit */
+  flex: 1; /* Allow elements to grow/shrink */
+  margin: 10px;
+}
+
+.small-image {
+  max-width: 100%; /* Responsive */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Media query for small screens */
+@media (max-width: 768px) {
+  .companyscopes {
+    flex-direction: column; /* Stack elements vertically on small screens */
+    justify-content: center;
+    align-items: center; /* Center all units */
+  }
+
+  .unitscope {
+    margin: 20px 0; /* Add vertical spacing between items */
+  }
+
+  .small-image {
+    margin: 0 auto; /* Center the image horizontally */
+    width: 100%; /* Make the image fill the container on small screens */
+    max-width: 300px; /* Limit the max width */
+  }
+
+  .vertSept {
+    display: none; /* Hide vertical separator on small screens */
+  }
+}
