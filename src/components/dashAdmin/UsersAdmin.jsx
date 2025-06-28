@@ -2,16 +2,15 @@ import React, { useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../database/firebaseConfig";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import Swal from "sweetalert2";
 
 const UsersAdmin = ({ activeUsers, setProfileState, setUserData }) => {
   initializeApp(firebaseConfig);
-
   const db = getFirestore();
 
   useEffect(() => {
     activeUsers.forEach((element) => {
       const docRef = doc(db, "userlogs", element?.id);
-
       updateDoc(docRef, {
         authStatus: "seen",
       });
@@ -30,22 +29,18 @@ const UsersAdmin = ({ activeUsers, setProfileState, setUserData }) => {
               <div className="unitheadsect">Email</div>
               <div className="unitheadsect">Crptic ID</div>
               <div className="unitheadsect">Joined On</div>
+              <div className="unitheadsect">Actions</div>
             </div>
             {activeUsers
               .sort((a, b) => {
                 const dateA = new Date(a.date);
                 const dateB = new Date(b.date);
-
                 return dateB - dateA;
               })
               .map((elem, idx) => (
                 <div
                   className="investmentTablehead"
                   key={`${elem.idnum}-UAdmin_${idx}`}
-                  onClick={() => {
-                    setUserData(elem);
-                    setProfileState("Edit User");
-                  }}
                 >
                   <div className="unitheadsect">{idx + 1}</div>
                   <div className="unitheadsect">{elem?.name}</div>
@@ -57,6 +52,44 @@ const UsersAdmin = ({ activeUsers, setProfileState, setUserData }) => {
                       month: "short",
                       year: "numeric",
                     })}
+                  </div>
+                  <div className="unitheadsect">
+                    <button
+                      onClick={() => {
+                        setUserData(elem);
+                        setProfileState("Edit User");
+                      }}
+                      className="borderBtn"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={async () => {
+                        const { value: bonusInput } = await Swal.fire({
+                          title: `Edit Bonus for ${elem?.name}`,
+                          input: "number",
+                          inputLabel: "New Bonus Amount",
+                          inputPlaceholder: "Enter bonus value",
+                          showCancelButton: true,
+                        });
+
+                        if (bonusInput !== undefined) {
+                          const docRef = doc(db, "userlogs", elem?.id);
+                          await updateDoc(docRef, {
+                            bonus: Number(bonusInput),
+                          });
+                          Swal.fire(
+                            "Updated!",
+                            "User's bonus has been updated.",
+                            "success"
+                          );
+                        }
+                      }}
+                      className="borderBtn"
+                      style={{ marginLeft: "10px" }}
+                    >
+                      Edit Bonus
+                    </button>
                   </div>
                 </div>
               ))}

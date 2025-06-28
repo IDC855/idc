@@ -1,6 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { firebaseConfig } from "../../database/firebaseConfig";
 import Swal from "sweetalert2";
 
@@ -17,6 +24,26 @@ const KycSect = ({ currentUser }) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [kycStatus, setKycStatus] = useState(null);
+
+  useEffect(() => {
+    const fetchKycStatus = async () => {
+      if (!currentUser?.id) return;
+
+      const q = query(
+        collection(db, "kyc_submissions"),
+        where("userId", "==", currentUser.id)
+      );
+
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        const latest = querySnapshot.docs[0].data();
+        setKycStatus(latest.status);
+      }
+    };
+
+    fetchKycStatus();
+  }, [currentUser]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,6 +58,24 @@ const KycSect = ({ currentUser }) => {
         icon: "error",
         title: "Unauthorized",
         text: "You must be logged in to submit KYC.",
+      });
+      return;
+    }
+
+    if (kycStatus === "Pending") {
+      Swal.fire({
+        icon: "warning",
+        title: "Already Submitted",
+        text: "Your KYC is already under review.",
+      });
+      return;
+    }
+
+    if (kycStatus === "Approved") {
+      Swal.fire({
+        icon: "info",
+        title: "Already Approved",
+        text: "Your KYC has already been approved.",
       });
       return;
     }
@@ -54,6 +99,7 @@ const KycSect = ({ currentUser }) => {
         text: "Your KYC is under review. Please wait for admin approval.",
       });
 
+      setKycStatus("Pending");
       setFormData({
         first_name: "",
         last_name: "",
@@ -73,8 +119,50 @@ const KycSect = ({ currentUser }) => {
     }
   };
 
+  const renderStatusAlert = () => {
+    if (kycStatus === "Pending") {
+      return (
+        <div
+          style={{
+            backgroundColor: "#fff3cd",
+            color: "#856404",
+            padding: "12px",
+            borderRadius: "6px",
+            marginBottom: "20px",
+            border: "1px solid #ffeeba",
+          }}
+        >
+          <strong>KYC Status:</strong> Your KYC is under review. Withdrawals are
+          disabled until approval.
+        </div>
+      );
+    }
+
+    if (kycStatus === "Approved") {
+      return (
+        <div
+          style={{
+            backgroundColor: "#d4edda",
+            color: "#155724",
+            padding: "12px",
+            borderRadius: "6px",
+            marginBottom: "20px",
+            border: "1px solid #c3e6cb",
+          }}
+        >
+          <strong style={{ color: "green" }}>KYC Status:</strong> ✅ Your KYC
+          has been approved,Congratulations 🎉.
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div className="kyc-container">
+      {renderStatusAlert()}
+
       <div className="mb-4">
         <h3>Submit KYC Information</h3>
         <p>
