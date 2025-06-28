@@ -132,8 +132,8 @@ const KycSect = ({ currentUser }) => {
             border: "1px solid #ffeeba",
           }}
         >
-          <strong>KYC Status:</strong> Your KYC is under review. Withdrawals are
-          disabled until approval.
+          <strong style={{ color: "red" }}>KYC Status:</strong> Your KYC is
+          under review. Withdrawals are disabled until approval.
         </div>
       );
     }
