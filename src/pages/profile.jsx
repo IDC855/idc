@@ -180,17 +180,13 @@ const Profile = () => {
     sessionStorage.removeItem("activeUser");
   };
 
-  //user dashboard values
-  const totalCapital = investments
-    .filter((elem) => elem?.status !== "Pending")
-    .reduce((sum, currentObject) => {
-      // Ensure that currentObject.capital is a number before adding it to the sum
-      const capitalValue =
-        typeof currentObject.capital === "number" ? currentObject.capital : 0;
-
-      // Add the capital value to the sum
-      return sum + capitalValue;
-    }, 0);
+  const totalCapital =
+    investments
+      .filter((elem) => elem?.status !== "Pending")
+      .reduce((sum, currentObject) => {
+        const capitalValue = Number(currentObject.capital) || 0;
+        return sum + capitalValue;
+      }, 0) + (currentUser?.balance || 0); // ✅ add the correct balance from Firestore
 
   const totalROI = investments
     .filter((elem) => elem?.status !== "Pending")
@@ -376,10 +372,10 @@ const Profile = () => {
               $
               {passwordShow
                 ? `${(
-                    currentUser?.bonus +
-                    totalROI +
-                    totalCapital +
-                    totalBonus
+                    (currentUser?.bonus || 0) +
+                    (totalROI || 0) +
+                    (totalCapital || 0) +
+                    (totalBonus || 0)
                   ).toLocaleString()}`
                 : "******"}
             </h2>

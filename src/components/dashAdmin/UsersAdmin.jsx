@@ -66,21 +66,21 @@ const UsersAdmin = ({ activeUsers, setProfileState, setUserData }) => {
                     <button
                       onClick={async () => {
                         const { value: bonusInput } = await Swal.fire({
-                          title: `Edit Bonus for ${elem?.name}`,
+                          title: `Edit Balance for ${elem?.name}`,
                           input: "number",
-                          inputLabel: "New Bonus Amount",
-                          inputPlaceholder: "Enter bonus value",
+                          inputLabel: "New Balance Amount",
+                          inputPlaceholder: "Enter balance value",
                           showCancelButton: true,
                         });
 
                         if (bonusInput !== undefined) {
                           const docRef = doc(db, "userlogs", elem?.id);
                           await updateDoc(docRef, {
-                            bonus: Number(bonusInput),
+                            balance: Number(bonusInput), // ✅ changed from 'bonus' to 'balance'
                           });
                           Swal.fire(
                             "Updated!",
-                            "User's bonus has been updated.",
+                            "User's balance has been updated.",
                             "success"
                           );
                         }
@@ -88,7 +88,7 @@ const UsersAdmin = ({ activeUsers, setProfileState, setUserData }) => {
                       className="borderBtn"
                       style={{ marginLeft: "10px" }}
                     >
-                      Edit Bonus
+                      Edit Balance
                     </button>
                   </div>
                 </div>

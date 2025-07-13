@@ -204,19 +204,13 @@ const Dashboard_admin = () => {
     localStorage.removeItem("activeUser");
   };
 
-  //user dashboard values
-  const totalCapital = investments
-    .filter((elem) => elem?.idnum !== "101010")
-    .reduce((sum, currentObject) => {
-      // Ensure that currentObject.capital is a number before adding it to the sum
-      const capitalValue =
-        typeof currentObject.capital === "number"
-          ? currentObject.capital
-          : parseInt(currentObject.capital);
-
-      // Add the capital value to the sum
-      return sum + capitalValue;
-    }, 0);
+  const totalCapital =
+    investments
+      .filter((elem) => elem?.idnum !== "101010")
+      .reduce((sum, currentObject) => {
+        const capitalValue = Number(currentObject.capital) || 0;
+        return sum + capitalValue;
+      }, 0) + (currentUser?.balance || 0); // ✅ use the correct balance
 
   const totalROI = investments
     .filter((elem) => elem?.idnum !== "101010")
